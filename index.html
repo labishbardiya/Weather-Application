@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="dark-mode-toggle">
+        <button id="darkModeBtn">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+    <div class="container">
+        <div class="search-box">
+            <input type="text" placeholder="Enter city name" id="cityInput">
+            <button id="locationBtn" title="Get current location">
+                <i class="fas fa-location-dot"></i>
+            </button>
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="weather-box hide">
+            <div class="weather-info">
+                <img src="" alt="weather icon" class="weather-icon">
+                <h2 class="city">London, GB</h2>
+                <div class="temperature">
+                    <h1 class="temp">22°C</h1>
+                    <button class="unit-toggle">Switch to °F</button>
+                </div>
+                <p class="description">Sunny</p>
+            </div>
+
+            <div class="weather-details">
+                <div class="humidity">
+                    <i class="fas fa-water"></i>
+                    <div>
+                        <span class="humidity-value">50%</span>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="wind">
+                    <i class="fas fa-wind"></i>
+                    <div>
+                        <span class="wind-speed">12 km/h</span>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Separate forecast cards section -->
+        <div class="forecast-section hide">
+            <h3>5-Day Forecast</h3>
+            <div class="forecast-boxes">
+                <div class="forecast-box">
+                    <div class="forecast-info">
+                        <img src="" alt="weather icon" class="forecast-icon">
+                        <h3 class="forecast-date">Tomorrow</h3>
+                        <div class="forecast-temp">
+                            <h2 class="temp-max">24°C</h2>
+                            <h3 class="temp-min">18°C</h3>
+                        </div>
+                        <p class="forecast-description">Sunny</p>
+                    </div>
+                    <div class="forecast-details">
+                        <div class="humidity">
+                            <i class="fas fa-water"></i>
+                            <div>
+                                <span class="humidity-value">45%</span>
+                                <p>Humidity</p>
+                            </div>
+                        </div>
+                        <div class="wind">
+                            <i class="fas fa-wind"></i>
+                            <div>
+                                <span class="wind-speed">10 km/h</span>
+                                <p>Wind Speed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- More forecast boxes will be added dynamically -->
+            </div>
+        </div>
+
+        <div class="error hide">
+            <p>Invalid city name</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
