@@ -1,4 +1,4 @@
-const apiKey = '2540d01b62bbf2d6cbf5522205b2bd94';
+const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 const weatherBox = document.querySelector('.weather-box');
 const errorBox = document.querySelector('.error');
 const cityInput = document.getElementById('cityInput');
