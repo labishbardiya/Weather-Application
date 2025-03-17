@@ -1,4 +1,4 @@
-const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+const apiKey = "2540d01b62bbf2d6cbf5522205b2bd94";
 const weatherBox = document.querySelector('.weather-box');
 const errorBox = document.querySelector('.error');
 const cityInput = document.getElementById('cityInput');
@@ -6,8 +6,8 @@ const searchBtn = document.getElementById('searchBtn');
 const unitToggleBtn = document.querySelector('.unit-toggle');
 const darkModeBtn = document.getElementById('darkModeBtn');
 const body = document.body;
-const forecastSection = document.querySelector('.forecast-section');
-const forecastCards = document.querySelector('.forecast-cards');
+const forecastContainer = document.querySelector('.forecast-container');
+const forecastCards = document.querySelector('.forecast-boxes');
 const locationBtn = document.getElementById('locationBtn');
 
 let isMetric = true;
@@ -48,11 +48,11 @@ async function getWeatherData(city) {
         displayForecast(forecastData);
 
         weatherBox.classList.remove('hide');
-        forecastSection.classList.remove('hide');
+        forecastContainer.classList.remove('hide');
         errorBox.classList.add('hide');
     } catch (error) {
         weatherBox.classList.add('hide');
-        forecastSection.classList.add('hide');
+        forecastContainer.classList.add('hide');
         errorBox.classList.remove('hide');
     }
 }
@@ -81,11 +81,11 @@ async function getWeatherByCoords(lat, lon) {
         displayForecast(forecastData);
 
         weatherBox.classList.remove('hide');
-        forecastSection.classList.remove('hide');
+        forecastContainer.classList.remove('hide');
         errorBox.classList.add('hide');
     } catch (error) {
         weatherBox.classList.add('hide');
-        forecastSection.classList.add('hide');
+        forecastContainer.classList.add('hide');
         errorBox.classList.remove('hide');
         errorBox.querySelector('p').textContent = 'Unable to fetch weather data';
     }
@@ -213,8 +213,14 @@ function toggleDarkMode() {
     body.classList.toggle('dark-mode');
     const isDarkMode = body.classList.contains('dark-mode');
     darkModeBtn.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-
     localStorage.setItem('darkMode', isDarkMode);
+
+    // Update background for dark mode
+    const weatherIcon = document.querySelector('.weather-icon');
+    if (weatherIcon && weatherIcon.src) {
+        const iconCode = weatherIcon.src.split('/').pop().replace('@2x.png', '');
+        setWeatherBackground(iconCode);
+    }
 }
 
 function setWeatherBackground(iconCode) {
@@ -222,6 +228,17 @@ function setWeatherBackground(iconCode) {
     const backgroundImage = weatherBackgrounds[condition];
     if (backgroundImage) {
         document.body.style.backgroundImage = `url('images/${backgroundImage}')`;
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        // Add a dark overlay in dark mode
+        if (body.classList.contains('dark-mode')) {
+            document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            document.body.style.backgroundBlendMode = 'multiply';
+        } else {
+            document.body.style.backgroundColor = 'transparent';
+            document.body.style.backgroundBlendMode = 'normal';
+        }
     }
 }
 
@@ -266,7 +283,7 @@ function getCurrentLocation() {
                 errorBox.querySelector('p').textContent = 'Unable to get your location. Please allow location access.';
                 errorBox.classList.remove('hide');
                 weatherBox.classList.add('hide');
-                forecastSection.classList.add('hide');
+                forecastContainer.classList.add('hide');
                 // Reset button state
                 locationBtn.disabled = false;
                 locationBtn.innerHTML = '<i class="fas fa-location-dot"></i>';
